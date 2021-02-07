@@ -23,11 +23,8 @@ const validateCourseId = (req, res, next) => {
 }
 
 const validateCourseData = (req, res, next) => {
-  //console.log("Validating Course Name")
   const course = courses[req.courseIndex]
-  //console.log(req.body)
   for (const key in req.body) {
-    //console.log("\tValidating " + key)
     if (!(key in course)) {
       //https://stackoverflow.com/questions/6123425/rest-response-code-for-invalid-data
       res.status(422).send({
@@ -42,7 +39,6 @@ const validateCourseData = (req, res, next) => {
       return
     }
   }
-  //console.log("VALIDATION SUCCESS")
   next()
 }
 
