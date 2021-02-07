@@ -2,11 +2,12 @@
 
 const express = require('express')
 const router = express.Router()
-const validateCourseId = require('../middleware/validateCourseId')
+const {validateCourseId,
+       validateCourseData} = require('../middleware/validateCourse')
 const {courses} = require('../data/courses')
 
 // use middleware for requests with course id
-router.use('/:courseId', validateCourseId)
+router.use('/:courseId', validateCourseId, validateCourseData)
 
 // get all courses
 router.get('/', (req, res) => res.send({data: courses}))
@@ -40,7 +41,7 @@ router.put('/:courseId', (req, res) => {
   res.send({data: updatedcourse})
 })
 
-router.put('/:courseId', (req, res) => {
+router.patch('/:courseId', (req, res) => {
   const {id, ...theRest} = req.body
   const updatedCourse = Object.assign({}, courses[req.courseIndex], theRest)
   courses[req.courseIndex] = updatedCourse
