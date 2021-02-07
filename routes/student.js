@@ -28,7 +28,6 @@ router.post('/', (req, res) => {
     email
   }
   students.push(newStudent)
-  console.log(newStudent)
   res.status(201).send({data: newStudent})
 })
 

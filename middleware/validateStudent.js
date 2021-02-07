@@ -3,7 +3,7 @@
 const {students} = require('../data/students')
 
 const validateStudentId = (req, res, next) => {
-  console.log("Validating student")
+  //console.log("Validating student")
   const id = parseInt(req.params.studentId)
   const index = students.findIndex(student => student.id === id)
 
@@ -24,11 +24,11 @@ const validateStudentId = (req, res, next) => {
 }
 
 const validateStudentData = (req, res, next) => {
-  console.log("Validating Student Name")
+  //console.log("Validating Student Name")
   const student = students[req.studentIndex]
-  console.log(req.body)
+  //console.log(req.body)
   for (const key in req.body) {
-    console.log("\tValidating " + key)
+    //console.log("Validating " + key)
     if (!(key in student)) {
       //https://stackoverflow.com/questions/6123425/rest-response-code-for-invalid-data
       res.status(422).send({
@@ -43,7 +43,7 @@ const validateStudentData = (req, res, next) => {
       return
     }
   }
-  console.log("VALIDATION SUCCESS")
+  //console.log("VALIDATION SUCCESS")
   next()
 }
 
