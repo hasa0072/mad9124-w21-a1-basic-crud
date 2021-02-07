@@ -2,11 +2,12 @@
 
 const express = require('express')
 const router = express.Router()
-const validateStudentId = require('../middleware/validateStudentId')
+const {validateStudentId,
+       validateStudentData} = require('../middleware/validateStudent')
 const {students} = require('../data/students')
 
 // use middleware for requests with student id
-router.use('/:studentId', validateStudentId)
+router.use('/:studentId', validateStudentId, validateStudentData)
 
 // get all students
 router.get('/', (req, res) => res.send({data: students}))
@@ -18,15 +19,16 @@ router.get('/:studentId', (req, res) => {
 
 // create a new student
 router.post('/', (req, res) => {
-  const {firstName, lastName, nickname, email} = req.body
+  const {firstName, lastName, nickName, email} = req.body
   const newStudent = {
     id: Date.now(),
     firstName,
     lastName,
-    nickname,
+    nickName,
     email
   }
   students.push(newStudent)
+  console.log(newStudent)
   res.status(201).send({data: newStudent})
 })
 
@@ -34,13 +36,13 @@ router.post('/', (req, res) => {
 // update specified student
 router.put('/:studentId', (req, res) => {
   const id = parseInt(req.params.studentId)
-  const {firstName, lastName, nickname, email} = req.body
-  const updatedStudent = {id, firstName, lastName, nickname, email}
+  const {firstName, lastName, nickName, email} = req.body
+  const updatedStudent = {id, firstName, lastName, nickName, email}
   students[req.studentIndex] = updatedStudent
   res.send({data: updatedStudent})
 })
 
-router.put('/:studentId', (req, res) => {
+router.patch('/:studentId', (req, res) => {
   const {id, ...theRest} = req.body
   const updatedStudent = Object.assign({}, students[req.studentIndex], theRest)
   students[req.studentIndex] = updatedStudent
